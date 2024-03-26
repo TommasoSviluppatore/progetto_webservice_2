@@ -15,93 +15,62 @@ import control.Controller_MenuPrincipale;
 
 
 public class Finestra_MenuPrincipale extends JFrame {
+	private JTextField textField;
 	
-	/**prende la frase utente dal controller e dal file*/
-	JLabel fraseIniziale;
-	public String nome_utente="";
-	public void setUtente(String a) {
-		nome_utente=a;
-		fraseIniziale.setText("Benvenuto"+nome_utente+",  Cosa vuoi fare?"); 
-	}
-	
-	
-	
-	public JLabel Crediti;
-	public JButton ricordareNomeAzienda, inserireNomeAzienda, mercatoPrecedente, mercatoAttuale, mercatoSuccessivo;
-
 	public Finestra_MenuPrincipale() {
-		
-		/**
-		 	Da fare ancora il controllo delle variabili con il relativo
-		 	sorpasso e verifica
-		*/
-		/*if()
-			*/
-
-		setBounds(100, 100, 718, 417);
-		
-		setTitle("Borsa azioni osservatore di Poors&homeless people company");
-		setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		setBackground(new Color(240, 240, 240));
-		getContentPane().setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		getContentPane().setBackground(new Color(238, 238, 238));
 		getContentPane().setLayout(null);
 		
-		fraseIniziale = new JLabel();
-		fraseIniziale.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		fraseIniziale.setBounds(215, 11, 237, 28);
-		getContentPane().add(fraseIniziale);
+		JPanel pannello2 = new JPanel();
+		pannello2.setBounds(248, 0, 544, 404);
+		getContentPane().add(pannello2);
+		pannello2.setLayout(null);
 		
-		mercatoPrecedente = new JButton("Com'era il mercato ieri?");
-		mercatoPrecedente.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		mercatoPrecedente.setBounds(10, 150, 183, 39);
-		getContentPane().add(mercatoPrecedente);
+		JTextPane txtpnNomeAzienda = new JTextPane();
+		txtpnNomeAzienda.setText("Nome azienda: \t\t\t$azienda_per_soldi\r\n\t|"
+				+ "-> valore:\t\t\t$100€\r\n\t|-> proprietario:\t$vignola_matteo"
+				+ "\r\n\t|-> settore:\t\t\t$agricoltura\r\n\t|-> tipo "
+				+ "azienda:\t$pubblica_privata_statale");
+		txtpnNomeAzienda.setBounds(0, 0, 544, 404);
+		pannello2.add(txtpnNomeAzienda);
 		
-		inserireNomeAzienda = new JButton("Inserisci azienda da tenere traccia");
-		inserireNomeAzienda.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		inserireNomeAzienda.setBounds(10, 100, 345, 39);
-		getContentPane().add(inserireNomeAzienda);
+		JPanel pannelloINFO = new JPanel();
+		pannelloINFO.setBounds(0, 404, 792, 170);
+		getContentPane().add(pannelloINFO);
+		pannelloINFO.setLayout(null);
 		
-		mercatoSuccessivo = new JButton("Voglio una previsione...");
-		mercatoSuccessivo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		mercatoSuccessivo.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		mercatoSuccessivo.setBounds(510, 150, 189, 39);
-		getContentPane().add(mercatoSuccessivo);
+		JTextPane txtpnProprietarioInfonome = new JTextPane();
+		txtpnProprietarioInfonome.setText("Proprietario info:\r\n\t|->Nome: \t\t\tvignola matteo,\r\n\t|->codice\r\n\t|\tfiscale:\t\t\t458538iojodijf90509\r\n\t|->partita iva:\t\tjgdroji50985409dgkjl\r\n\t|->telefono 1:\t\t+39 758 383 5858\r\n");
+		txtpnProprietarioInfonome.setBounds(0, 0, 792, 170);
+		pannelloINFO.add(txtpnProprietarioInfonome);
 		
-		mercatoAttuale = new JButton("Qual'è il valore attuale?");
-		mercatoAttuale.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		mercatoAttuale.setBounds(263, 150, 189, 39);
-		getContentPane().add(mercatoAttuale);
+		JPanel pannelloLista = new JPanel();
+		pannelloLista.setBounds(0, 0, 247, 404);
+		getContentPane().add(pannelloLista);
+		pannelloLista.setLayout(null);
 		
-		ricordareNomeAzienda = new JButton("Ricordami il nome dell' azienda da tenere traccia");
-		ricordareNomeAzienda.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		ricordareNomeAzienda.setBounds(365, 100, 339, 39);
-		getContentPane().add(ricordareNomeAzienda);
+		textField = new JTextField();
+		textField.setBounds(69, 0, 178, 38);
+		pannelloLista.add(textField);
+		textField.setColumns(10);
 		
-		Crediti=new JLabel("Sviluppato da TommasoSviluppatore e MiAppendoAlPeroDallaPazienza [Tubia Tommaso, Perazzetta Davide]  ⓒ 2024");
-		Crediti.setHorizontalAlignment(SwingConstants.CENTER);
-		Crediti.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		Crediti.setBounds(-4, 433, 739, 28);
-		getContentPane().add(Crediti);
+		JLabel testoRicerca1 = new JLabel("Ricerca:");
+		testoRicerca1.setBounds(0, 3, 69, 35);
+		testoRicerca1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		pannelloLista.add(testoRicerca1);
+		
+		JPanel listaBottoniAziende = new JPanel();
+		listaBottoniAziende.setBounds(0, 36, 247, 368);
+		pannelloLista.add(listaBottoniAziende);
+		listaBottoniAziende.setLayout(null);
+		
+		JButton BottoneGenerato1 = new JButton("Viva-gnor-urltura");
+		BottoneGenerato1.setBounds(10, 11, 227, 53);
+		listaBottoniAziende.add(BottoneGenerato1);
+		
 	}
 
 	
 	public void registraEvento(Controller_MenuPrincipale controller) {
+		
 	}
-	
-
-
-	
-	/*private void initializationBtn() {
-		this.btnStart.setEnabled(true);
-		this.btnAddCar.setEnabled(false);
-		this.btnRemoveCar.setEnabled(false);
-		this.btnPause.setEnabled(false);
-		this.btnResume.setEnabled(false);
-		this.btnRestart.setEnabled(false);
-		this.btnStop.setEnabled(false);
-	}*/
 }
