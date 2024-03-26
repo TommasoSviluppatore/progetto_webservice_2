@@ -63,7 +63,7 @@ public class Finestra_MenuPrincipale extends JFrame {
 		pannelloLista.add(listaBottoniAziende);
 		listaBottoniAziende.setLayout(null);
 		
-		JButton BottoneGenerato1 = new JButton("Viva-gnor-urltura");
+		JButton BottoneGenerato1 = new JButton("Viva-gnor-ultura");
 		BottoneGenerato1.setBounds(10, 11, 227, 53);
 		listaBottoniAziende.add(BottoneGenerato1);
 		
