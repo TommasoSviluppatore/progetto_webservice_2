@@ -46,11 +46,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/user/Desktop/25 marzo 2023 -- web service con java sql/lib64/jaxb-ri-2.3.1.zip">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/user/Desktop/25 marzo 2023 -- web service con java sql/lib64/jaxb-runtime.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -62,11 +57,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/user/Desktop/25 marzo 2023 -- web service con java sql/lib64/miglayout15-swing.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/user/Desktop/25 marzo 2023 -- web service con java sql/lib64/miglayout-src.zip">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
