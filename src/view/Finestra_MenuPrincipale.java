@@ -29,7 +29,11 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        pannelloINFO.setLayout(null);
 
 	        infoTestoProprietario = new JTextPane();
-	        infoTestoProprietario.setText("Proprietario info:\r\n\t|->Nome: \t\t\tvignola matteo,\r\n\t|->codice\r\n\t|\tfiscale:\t\t\t458538iojodijf90509\r\n\t|->partita iva:\t\tjgdroji50985409dgkjl\r\n\t|->telefono 1:\t\t+39 758 383 5858\r\n");
+	        infoTestoProprietario.setText("Proprietario info:\r\n\t|->"
+	        							+ "Nome: \t\t\t						vignola matteo				,\r\n\t|->"
+	        							+ "codice\r\n\t|\tfiscale:\t\t\t	458538iojodijf90509			\r\n\t|->"
+	        							+ "partita iva:\t\t					jgdroji50985409dgkjl		\r\n\t|->"
+	        							+ "telefono 1:\t\t					+39 758 383 5858			\r\n");
 	        infoTestoProprietario.setBounds(0, 0, 792, 170);
 	        pannelloINFO.add(infoTestoProprietario);
 
@@ -60,10 +64,11 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        infoTestoAzienda = new JTextPane();
 	        infoTestoAzienda.setBounds(248, 0, 544, 404);
 	        getContentPane().add(infoTestoAzienda);
-	        infoTestoAzienda.setText("Nome azienda: \t\t\t$azienda_per_soldi\r\n\t|"
-	        		+ "-> valore:\t\t\t$100€\r\n\t|-> proprietario:\t$vignola_matteo"
-	        		+ "\r\n\t|-> settore:\t\t\t$agricoltura\r\n\t|-> tipo "
-	        		+ "azienda:\t$pubblica_privata_statale");
+	        infoTestoAzienda.setText("Nome azienda: \t\t\t			$azienda_per_soldi				\r\n\t|-> "
+	        							+ "valore:\t\t\t			$100€							\r\n\t|-> "
+	        							+ "proprietario:\t			$vignola_matteo 				\r\n\t|-> "
+	        							+ "settore:\t\t\t			$agricoltura					\r\n\t|-> tipo "
+	        							+ "azienda:\t				$pubblica_privata_statale");
 	        
 	        aggiungiAziende();
 		
@@ -83,16 +88,23 @@ public class Finestra_MenuPrincipale extends JFrame {
 	}
 	
 	public void visualizzaInfoAzienda() {
-		/**cambiare contesto e scritte in base a quale azienda stai premendo*/
+		
+		
+		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
 		
 		/*commandi sql per estrare le informazioni*/
 		
 		/*----------------------------------------*/
-		infoTestoAzienda.setText("Nome azienda: \t\t\t"+aziendaNomeEstratto+"\r\n\t|"
-        		+ "-> valore:\t\t\t"+aziendaValoreEstratto+"\r\n\t|-> proprietario:\t"+aziendaProprietarioEstratto+
-        		"\r\n\t|-> settore:\t\t\t"+aziendaSettoreEstratto+"\r\n\t|-> tipo "
-        		+ "azienda:\t$"+aziendaTipoEstratto+"");
+		infoTestoAzienda.setText("Nome azienda: \t\t\t"	+aziendaNomeEstratto+			"\r\n\t|-> "
+        						+ "valore:\t\t\t"		+aziendaValoreEstratto+			"\r\n\t|-> "
+        						+ "proprietario:\t"		+aziendaProprietarioEstratto+	"\r\n\t|-> "
+        						+ "settore:\t\t\t"		+aziendaSettoreEstratto+		"\r\n\t|-> tipo "
+        						+ "azienda:\t$"			+aziendaTipoEstratto+			"");
 		
-		infoTestoProprietario.setText("");
+		infoTestoProprietario.setText("Proprietario info:\r\n\t|->"
+								+ "Nome: \t\t\t"					+proprietarioNomeEstratto+				"\r\n\t|->"
+								+ "codice\r\n\t|\tfiscale:\t\t\t"	+proprietarioCodFiscEstratto+			"\r\n\t|->"
+								+ "partita iva:\t\t"				+proprietarioPIVAestratto+				"\r\n\t|->"
+								+ "telefono 1:\t\t"					+proprietarioTelefonoEstratto+			"\r\n");
 	}
 }
