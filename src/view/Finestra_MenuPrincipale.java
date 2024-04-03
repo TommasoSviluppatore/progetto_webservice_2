@@ -74,7 +74,7 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        							+ "settore:\t\t\t			$agricoltura					\r\n\t|-> tipo "
 	        							+ "azienda:\t				$pubblica_privata_statale");
 	        
-	        aggiungiAziende();
+	        aggiungiAziendeBottoni();
 		
 	}
 
@@ -90,7 +90,7 @@ public class Finestra_MenuPrincipale extends JFrame {
 		password = "password";
 		
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			String query_old = "SELECT * FROM azienda_generica WHERE id_proprietario = ?";
+			String query = "SELECT nome FROM azienda_generica;";
 		
 			try (PreparedStatement pstmt = conn.prepareStatement(query)) {
 			    // Imposta il valore del parametro nella query
@@ -124,7 +124,9 @@ public class Finestra_MenuPrincipale extends JFrame {
 	
 	
 	
-	public void CambiaInfo_Azienda_e_proprietario_SuiBox(String query) {
+	
+	
+	public void CambiaInfo_Azienda_e_proprietario_SuiBox(String cueriUno, String cueriDue) {
 		
 		String 		aziendaNomeEstratto; float aziendaValoreEstratto; String aziendaProprietarioEstratto,
 					aziendaSettoreEstratto,aziendaTipoEstratto;
@@ -135,20 +137,28 @@ public class Finestra_MenuPrincipale extends JFrame {
 		String 		url, username, password;
 		
 		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
+		
+
+		
+		
+		
+		
+		/*commandi sql per estrare le informazioni dell'azienda*/
 		url = "jdbc:mysql://localhost:3306/websrvjavaxml";
         username = "username";
         password = "password";
         
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            String query_old = "SELECT * FROM azienda_generica WHERE id_proprietario = ?";
+            String query_old = "SELECT * FROM azienda_generica;";
             
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            try (PreparedStatement pstmt = conn.prepareStatement(cueriUno)) {
                 // Imposta il valore del parametro nella query
                 pstmt.setInt(1, 1);
                 
                 // Esegue la query e ottiene il risultato
                 try (ResultSet rs = pstmt.executeQuery()) {
                     // Itera sui risultati e stampa le informazioni
+                	
                     while (rs.next()) {
                         int id = rs.getInt("id");
                         aziendaNomeEstratto = rs.getString("nome");
@@ -156,17 +166,50 @@ public class Finestra_MenuPrincipale extends JFrame {
                         aziendaProprietarioEstratto = rs.getString("proprietario");
                         aziendaSettoreEstratto= rs.getString("settore");
                         aziendaTipoEstratto= rs.getString("tipo_azienda");
-                                            }
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-		/*commandi sql per estrare le informazioni*/
+		/*commandi sql per estrare le informazioni dell'azienda*/
+		
+        
+        
+        
+        
+        
+        /*commandi sql per estrare le informazioni del proprietario*/
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            String query_old = "SELECT * FROM persona_generica;";
+            
+            try (PreparedStatement pstmt = conn.prepareStatement(cueriUno)) {
+                // Imposta il valore del parametro nella query
+                pstmt.setInt(1, 1);
+                
+                // Esegue la query e ottiene il risultato
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    // Itera sui risultati e stampa le informazioni
+                	
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        proprietarioNomeEstratto = rs.getString("nome");
+                        proprietarioCodFiscEstratto = rs.getString("codice_fiscale");
+                        proprietarioPIVAestratto= rs.getString("partita_iva");
+                        proprietarioTelefonoEstratto=rs.getString("telefono");
+                    }
+                    
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }        
+        /*commandi sql per estrare le informazioni del proprietario*/
 		
 		
-		
-		
+        
+        
+        
 		/*----------------------------------------*/
 		infoTestoAzienda.setText("Nome azienda: \t\t\t"	+aziendaNomeEstratto+			"\r\n\t|-> "
         						+ "valore:\t\t\t"		+aziendaValoreEstratto+			"\r\n\t|-> "
@@ -180,4 +223,7 @@ public class Finestra_MenuPrincipale extends JFrame {
 								+ "partita iva:\t\t"				+proprietarioPIVAestratto+				"\r\n\t|->"
 								+ "telefono 1:\t\t"					+proprietarioTelefonoEstratto+			"\r\n");
 	}
+	
+	
+	
 }
