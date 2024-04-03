@@ -28,32 +28,29 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        getContentPane().setLayout(null);
 
 	        pannelloINFO = new JPanel();
-	        pannelloINFO.setBounds(0, 404, 792, 170);
+	        pannelloINFO.setBounds(500, 404, 792, 170);
 	        getContentPane().add(pannelloINFO);
 	        pannelloINFO.setLayout(null);
 
 	        infoTestoProprietario = new JTextPane();
-	        infoTestoProprietario.setText("Proprietario info:\r\n\t|->"
-	        							+ "Nome: \t\t\t						vignola matteo				,\r\n\t|->"
-	        							+ "codice\r\n\t|\tfiscale:\t\t\t	458538iojodijf90509			\r\n\t|->"
-	        							+ "partita iva:\t\t					jgdroji50985409dgkjl		\r\n\t|->"
-	        							+ "telefono 1:\t\t					+39 758 383 5858			\r\n");
+	        infoTestoProprietario.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+	        infoTestoProprietario.setText("Proprietario info:\r\n\t|->Nome: \t\t\t\tvignola matteo\t\t\t\t,\r\n\t|->codice\r\n\t\tfiscale:\t\t\t\t458538iojodijf90509\t\t\t\r\n\t|->partita iva:\t\t\tjgdroji50985409dgkjl\t\t\r\n\t|->telefono 1:\t\t\t+39 758 383 5858\t\t\t\r\n");
 	        infoTestoProprietario.setBounds(0, 0, 792, 170);
 	        pannelloINFO.add(infoTestoProprietario);
 
 	        pannelloLista = new JPanel();
-	        pannelloLista.setBounds(0, 0, 247, 404);
+	        pannelloLista.setBounds(0, 0, 275, 404);
 	        getContentPane().add(pannelloLista);
 	        pannelloLista.setLayout(null);
 
 	        campoRicerca = new JTextField();
-	        campoRicerca.setBounds(69, 0, 178, 38);
+	        campoRicerca.setBounds(81, 0, 194, 38);
 	        pannelloLista.add(campoRicerca);
 	        campoRicerca.setColumns(10);
 
 	        // Creazione del pannello scrollabile
 	        JScrollPane scrollPane = new JScrollPane();
-	        scrollPane.setBounds(0, 36, 247, 368);
+	        scrollPane.setBounds(0, 35, 275, 369);
 	        pannelloLista.add(scrollPane);
 
 	        // Creazione del pannello contenente i bottoni
@@ -62,17 +59,15 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        scrollPane.setViewportView(listaBottoniAziende);
 
 	        BottoneRicerca = new JButton("Ricerca");
-	        BottoneRicerca.setBounds(0, 0, 72, 38);
+	        BottoneRicerca.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+	        BottoneRicerca.setBounds(0, 0, 83, 38);
 	        pannelloLista.add(BottoneRicerca);
 	        
 	        infoTestoAzienda = new JTextPane();
-	        infoTestoAzienda.setBounds(248, 0, 544, 404);
+	        infoTestoAzienda.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 13));
+	        infoTestoAzienda.setBounds(274, 0, 518, 404);
 	        getContentPane().add(infoTestoAzienda);
-	        infoTestoAzienda.setText("Nome azienda: \t\t\t			$azienda_per_soldi				\r\n\t|-> "
-	        							+ "valore:\t\t\t			$100€							\r\n\t|-> "
-	        							+ "proprietario:\t			$vignola_matteo 				\r\n\t|-> "
-	        							+ "settore:\t\t\t			$agricoltura					\r\n\t|-> tipo "
-	        							+ "azienda:\t				$pubblica_privata_statale");
+	        infoTestoAzienda.setText("Nome azienda: \t\t\t\t\t\t$azienda_per_soldi\t\t\t\t\r\n\t|-> valore:\t\t\t\t\t\t$100€\t\t\t\t\t\t\t\r\n\t|-> proprietario:\t\t\t\t$vignola_matteo \t\t\t\t\r\n\t|-> settore:\t\t\t\t\t\t$agricoltura\t\t\t\t\t\r\n\t|-> tipo azienda:\t\t\t\t$pubblica_privata_statale");
 	        
 	        aggiungiAziendeBottoni();
 		
@@ -126,7 +121,7 @@ public class Finestra_MenuPrincipale extends JFrame {
 	
 	
 	
-	public void CambiaInfo_Azienda_e_proprietario_SuiBox(String cueriUno, String cueriDue) {
+	public void CambiaInfo_Azienda_e_proprietario_SuiBox(String query, String query2) {
 		
 		String 		aziendaNomeEstratto; float aziendaValoreEstratto; String aziendaProprietarioEstratto,
 					aziendaSettoreEstratto,aziendaTipoEstratto;
@@ -149,14 +144,13 @@ public class Finestra_MenuPrincipale extends JFrame {
         password = "password";
         
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            String query_old = "SELECT * FROM azienda_generica;";
             
-            try (PreparedStatement pstmt = conn.prepareStatement(cueriUno)) {
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 // Imposta il valore del parametro nella query
                 pstmt.setInt(1, 1);
                 
                 // Esegue la query e ottiene il risultato
-                try (ResultSet rs = pstmt.executeQuery()) {
+                try (ResultSet rs = pstmt.executeQuery(query)) {
                     // Itera sui risultati e stampa le informazioni
                 	
                     while (rs.next()) {
@@ -181,14 +175,13 @@ public class Finestra_MenuPrincipale extends JFrame {
         
         /*commandi sql per estrare le informazioni del proprietario*/
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            String query_old = "SELECT * FROM persona_generica;";
             
-            try (PreparedStatement pstmt = conn.prepareStatement(cueriUno)) {
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 // Imposta il valore del parametro nella query
                 pstmt.setInt(1, 1);
                 
                 // Esegue la query e ottiene il risultato
-                try (ResultSet rs = pstmt.executeQuery()) {
+                try (ResultSet rs = pstmt.executeQuery(query2)) {
                     // Itera sui risultati e stampa le informazioni
                 	
                     while (rs.next()) {
