@@ -10,9 +10,13 @@ import javax.swing.*;
 import javax.xml.*;
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.*;
+import java.sql.*;
 
 import control.Controller_MenuPrincipale;
 
+/*		da fare in modo che ogni bottone cambi schermata e cambi informazioni sull'azienda che si è scelti
+ * 		fare in modo che il bottone possa essere premibile e seleziona l'azienda 
+*/
 
 public class Finestra_MenuPrincipale extends JFrame {
 	private JTextField campoRicerca;
@@ -75,10 +79,41 @@ public class Finestra_MenuPrincipale extends JFrame {
 	}
 
 	
-	public void aggiungiAziende() {
+	public void aggiungiAziendeBottoni() {
+		String[] aziendaNomeEstratto = new String[80];
+		
+		String 		url, username, password;
+		
+		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
+		url = "jdbc:mysql://localhost:3306/websrvjavaxml";
+		username = "username";
+		password = "password";
+		
+		try (Connection conn = DriverManager.getConnection(url, username, password)) {
+			String query_old = "SELECT * FROM azienda_generica WHERE id_proprietario = ?";
+		
+			try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+			    // Imposta il valore del parametro nella query
+			    pstmt.setInt(1, 1);
+			    
+			    // Esegue la query e ottiene il risultato
+			    try (ResultSet rs = pstmt.executeQuery()) {
+			        // Itera sui risultati e stampa le informazioni
+			    	int i=0;
+			        while (rs.next() || i<79) {
+			            int id = rs.getInt("id");
+			            aziendaNomeEstratto[i] = rs.getString("nome");
+			            i++;
+			        }
+			    }
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		/**aggiungere stringa di sql ed eseguibile che prende i dati da sql e mostra le aziende*/
-		for (int i = 0; i < 10; i++) {
-            JButton button = new JButton("vignola" + i + ""); // Crea un nuovo JButton con il nome specificato
+		for (int i = 0; i < 10 || aziendaNomeEstratto[i]!=""; i++) {
+            JButton button = new JButton(aziendaNomeEstratto +" "+ i + ""); // Crea un nuovo JButton con il nome specificato
             listaBottoniAziende.add(button); // Aggiungi il pulsante al pannello
         }
 
@@ -87,12 +122,50 @@ public class Finestra_MenuPrincipale extends JFrame {
         listaBottoniAziende.repaint();
 	}
 	
-	public void visualizzaInfoAzienda() {
+	
+	
+	public void CambiaInfo_Azienda_e_proprietario_SuiBox(String query) {
 		
+		String 		aziendaNomeEstratto; float aziendaValoreEstratto; String aziendaProprietarioEstratto,
+					aziendaSettoreEstratto,aziendaTipoEstratto;
+		
+		String 		proprietarioNomeEstratto,proprietarioCodFiscEstratto,proprietarioPIVAestratto,
+					proprietarioTelefonoEstratto;
+		
+		String 		url, username, password;
 		
 		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
-		
+		url = "jdbc:mysql://localhost:3306/websrvjavaxml";
+        username = "username";
+        password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            String query_old = "SELECT * FROM azienda_generica WHERE id_proprietario = ?";
+            
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                // Imposta il valore del parametro nella query
+                pstmt.setInt(1, 1);
+                
+                // Esegue la query e ottiene il risultato
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    // Itera sui risultati e stampa le informazioni
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        aziendaNomeEstratto = rs.getString("nome");
+                        aziendaValoreEstratto = rs.getFloat("valore");
+                        aziendaProprietarioEstratto = rs.getString("proprietario");
+                        aziendaSettoreEstratto= rs.getString("settore");
+                        aziendaTipoEstratto= rs.getString("tipo_azienda");
+                                            }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 		/*commandi sql per estrare le informazioni*/
+		
+		
+		
 		
 		/*----------------------------------------*/
 		infoTestoAzienda.setText("Nome azienda: \t\t\t"	+aziendaNomeEstratto+			"\r\n\t|-> "
