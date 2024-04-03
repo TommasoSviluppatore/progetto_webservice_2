@@ -75,6 +75,15 @@ public class Finestra_MenuPrincipale extends JFrame {
 
 	
 	public void aggiungiAziendeBottoni() {
+		/**query per nome azienda singola
+		 * 
+		 * 
+		 * SELECT a.nome 
+FROM azienda_generica AS a 
+INNER JOIN persona_generica AS b 
+ON a.id_proprietario = b.id; 
+
+*/
 		String[] aziendaNomeEstratto = new String[80];
 		
 		String 		url, username, password;
@@ -133,10 +142,6 @@ public class Finestra_MenuPrincipale extends JFrame {
 		
 		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
 		
-
-		
-		
-		
 		
 		/*commandi sql per estrare le informazioni dell'azienda*/
 		url = "jdbc:mysql://localhost:3306/websrvjavaxml";
@@ -168,8 +173,6 @@ public class Finestra_MenuPrincipale extends JFrame {
         }
 		/*commandi sql per estrare le informazioni dell'azienda*/
 		
-        
-        
         
         
         
