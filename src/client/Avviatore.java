@@ -33,7 +33,6 @@ public class Avviatore {
 				
 					/**avvio instanza in sottofondo passandogli il controller*/
 					
-					Controller_DatiApptxt c1=new Controller_DatiApptxt();
 					
 					
 				}catch(Exception e) {

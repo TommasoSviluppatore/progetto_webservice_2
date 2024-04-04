@@ -19,6 +19,8 @@ import control.Controller_MenuPrincipale;
 */
 
 public class Finestra_MenuPrincipale extends JFrame {
+	Controller_MenuPrincipale contrrrr = new Controller_MenuPrincipale();
+	
 	private JTextField campoRicerca;
 	private JPanel pannelloINFO, txtpnJPanel,txtPanel, pannelloLista, listaBottoniAziende;
 	private JTextPane infoTestoAzienda, infoTestoProprietario;
@@ -69,21 +71,24 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        getContentPane().add(infoTestoAzienda);
 	        infoTestoAzienda.setText("Nome azienda: \t\t\t\t\t\t$azienda_per_soldi\t\t\t\t\r\n\t|-> valore:\t\t\t\t\t\t$100€\t\t\t\t\t\t\t\r\n\t|-> proprietario:\t\t\t\t$vignola_matteo \t\t\t\t\r\n\t|-> settore:\t\t\t\t\t\t$agricoltura\t\t\t\t\t\r\n\t|-> tipo azienda:\t\t\t\t$pubblica_privata_statale");
 	        
-	        aggiungiAziendeBottoni();
+	        aggiungiAziendeBottoniInizio();
 		
 	}
 
+	    
+	    
+	    
 	
-	public void aggiungiAziendeBottoni() {
-		/**query per nome azienda singola
-		 * 
-		 * 
-		 * SELECT a.nome 
-FROM azienda_generica AS a 
-INNER JOIN persona_generica AS b 
-ON a.id_proprietario = b.id; 
-
-*/
+	public void aggiungiAziendeBottoniInizio() {
+		/**
+		 			query per nome azienda singola
+		
+					SELECT a.nome 
+					FROM azienda_generica AS a 
+					INNER JOIN persona_generica AS b 
+					ON a.id_proprietario = b.id; 
+		
+		*/
 		String[] aziendaNomeEstratto = new String[80];
 		
 		String 		url, username, password;
@@ -127,99 +132,29 @@ ON a.id_proprietario = b.id;
 	}
 	
 	
+	public void infoTestoAzienda_testoimposta(String Stringa) {
+		infoTestoAzienda.setText(Stringa);
+	}
 	
-	
-	
-	public void CambiaInfo_Azienda_e_proprietario_SuiBox(String query, String query2) {
-		
-		String 		aziendaNomeEstratto; float aziendaValoreEstratto; String aziendaProprietarioEstratto,
-					aziendaSettoreEstratto,aziendaTipoEstratto;
-		
-		String 		proprietarioNomeEstratto,proprietarioCodFiscEstratto,proprietarioPIVAestratto,
-					proprietarioTelefonoEstratto;
-		
-		String 		url, username, password;
-		
-		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
-		
-		
-		/*commandi sql per estrare le informazioni dell'azienda*/
-		url = "jdbc:mysql://localhost:3306/websrvjavaxml";
-        username = "username";
-        password = "password";
-        
-        try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                // Imposta il valore del parametro nella query
-                pstmt.setInt(1, 1);
-                
-                // Esegue la query e ottiene il risultato
-                try (ResultSet rs = pstmt.executeQuery(query)) {
-                    // Itera sui risultati e stampa le informazioni
-                	
-                    while (rs.next()) {
-                        int id = rs.getInt("id");
-                        aziendaNomeEstratto = rs.getString("nome");
-                        aziendaValoreEstratto = rs.getFloat("valore");
-                        aziendaProprietarioEstratto = rs.getString("proprietario");
-                        aziendaSettoreEstratto= rs.getString("settore");
-                        aziendaTipoEstratto= rs.getString("tipo_azienda");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-		/*commandi sql per estrare le informazioni dell'azienda*/
-		
-        
-        
-        
-        /*commandi sql per estrare le informazioni del proprietario*/
-        try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                // Imposta il valore del parametro nella query
-                pstmt.setInt(1, 1);
-                
-                // Esegue la query e ottiene il risultato
-                try (ResultSet rs = pstmt.executeQuery(query2)) {
-                    // Itera sui risultati e stampa le informazioni
-                	
-                    while (rs.next()) {
-                        int id = rs.getInt("id");
-                        proprietarioNomeEstratto = rs.getString("nome");
-                        proprietarioCodFiscEstratto = rs.getString("codice_fiscale");
-                        proprietarioPIVAestratto= rs.getString("partita_iva");
-                        proprietarioTelefonoEstratto=rs.getString("telefono");
-                    }
-                    
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }        
-        /*commandi sql per estrare le informazioni del proprietario*/
-		
-		
-        
-        
-        
-		/*----------------------------------------*/
-		infoTestoAzienda.setText("Nome azienda: \t\t\t"	+aziendaNomeEstratto+			"\r\n\t|-> "
-        						+ "valore:\t\t\t"		+aziendaValoreEstratto+			"\r\n\t|-> "
-        						+ "proprietario:\t"		+aziendaProprietarioEstratto+	"\r\n\t|-> "
-        						+ "settore:\t\t\t"		+aziendaSettoreEstratto+		"\r\n\t|-> tipo "
-        						+ "azienda:\t$"			+aziendaTipoEstratto+			"");
-		
-		infoTestoProprietario.setText("Proprietario info:\r\n\t|->"
-								+ "Nome: \t\t\t"					+proprietarioNomeEstratto+				"\r\n\t|->"
-								+ "codice\r\n\t|\tfiscale:\t\t\t"	+proprietarioCodFiscEstratto+			"\r\n\t|->"
-								+ "partita iva:\t\t"				+proprietarioPIVAestratto+				"\r\n\t|->"
-								+ "telefono 1:\t\t"					+proprietarioTelefonoEstratto+			"\r\n");
+	public void infoTestoProprietario_testoimposta(String Stringa) {
+		infoTestoProprietario.setText(Stringa);
 	}
 	
 	
+
 	
+	/**alla pressione di questo pulsante fare partire questa funzione*/
+	public void ricercaPulsante() {
+		listaBottoniAziende.removeAll();
+		listaBottoniAziende.revalidate();
+		listaBottoniAziende.repaint();
+		contrrrr.ricercaNomeAziendaDaTesto(
+				"SELECT * FROM azienda_generica"
+				+ "where nome ="+campoRicerca.getText().toString()+";"
+		);
+	}
+	
+	public void resetPanelDopoRicerca(){
+		aggiungiAziendeBottoniInizio();
+	}
 }

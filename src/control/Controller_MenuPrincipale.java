@@ -1,6 +1,10 @@
 package control;
 
-import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;import java.net.URL;
 import java.net.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,24 +14,162 @@ import javax.swing.*;
 import javax.xml.*;
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.*;
+import java.sql.*;
 
 import view.Finestra_MenuPrincipale;
 
-public class Controller_MenuPrincipale implements ActionListener{
 
-	private Finestra_MenuPrincipale Finestra;
-	/**	controller menu principale
-	 	-> avviare tutte le attività con tutti i bottoni
-	 	-> aggiungere l'opzione di salvataggio
-	 */
-	
-	
-	public Controller_MenuPrincipale(Finestra_MenuPrincipale Finestra) {
-		
-	}
+public class Controller_MenuPrincipale {
+	Finestra_MenuPrincipale finestraMain = new Finestra_MenuPrincipale();
 
-	public void actionPerformed(ActionEvent e) {
+	
+	String 		aziendaNomeEstratto; 		float aziendaValoreEstratto; 	String aziendaProprietarioEstratto,
+				aziendaSettoreEstratto,		aziendaTipoEstratto;
+
+	String 		proprietarioNomeEstratto,	proprietarioCodFiscEstratto,	proprietarioPIVAestratto,
+				proprietarioTelefonoEstratto;
+
+	String 		url, 	username, 	password;
+
+	
+	public void CambiaInfoAzienda(String query, String query2) {
 		
+		
+		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
+		
+		
+		/*commandi sql per estrare le informazioni dell'azienda*/
+		url = "jdbc:mysql://localhost:3306/websrvjavaxml";
+        username = "username";
+        password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                // Imposta il valore del parametro nella query
+                pstmt.setInt(1, 1);
+                
+                // Esegue la query e ottiene il risultato
+                try (ResultSet rs = pstmt.executeQuery(query)) {
+                    // Itera sui risultati e stampa le informazioni
+                	
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        aziendaNomeEstratto = rs.getString("nome");
+                        aziendaValoreEstratto = rs.getFloat("valore");
+                        aziendaProprietarioEstratto = rs.getString("proprietario");
+                        aziendaSettoreEstratto= rs.getString("settore");
+                        aziendaTipoEstratto= rs.getString("tipo_azienda");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+		/*----------------------------------------*/
+		finestraMain.infoTestoAzienda_testoimposta("Nome azienda: \t\t\t"	+aziendaNomeEstratto+			"\r\n\t|-> "
+        						+ "valore:\t\t\t"		+aziendaValoreEstratto+			"\r\n\t|-> "
+        						+ "proprietario:\t"		+aziendaProprietarioEstratto+	"\r\n\t|-> "
+        						+ "settore:\t\t\t"		+aziendaSettoreEstratto+		"\r\n\t|-> tipo "
+        						+ "azienda:\t$"			+aziendaTipoEstratto+			"");
+		/*commandi sql per estrare le informazioni dell'azienda*/
 	}
 	
+	public void CambiaInfoProprietario(String query) {
+		
+        /*commandi sql per estrare le informazioni del proprietario*/
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                // Imposta il valore del parametro nella query
+                pstmt.setInt(1, 1);
+                
+                // Esegue la query e ottiene il risultato
+                try (ResultSet rs = pstmt.executeQuery(query)) {
+                    // Itera sui risultati e stampa le informazioni
+                	
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        proprietarioNomeEstratto = rs.getString("nome");
+                        proprietarioCodFiscEstratto = rs.getString("codice_fiscale");
+                        proprietarioPIVAestratto= rs.getString("partita_iva");
+                        proprietarioTelefonoEstratto=rs.getString("telefono");
+                    }
+                    
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }        
+        /*commandi sql per estrare le informazioni del proprietario*/
+		
+		finestraMain.infoTestoProprietario_testoimposta("Proprietario info:\r\n\t|->"
+								+ "Nome: \t\t\t"					+proprietarioNomeEstratto+				"\r\n\t|->"
+								+ "codice\r\n\t|\tfiscale:\t\t\t"	+proprietarioCodFiscEstratto+			"\r\n\t|->"
+								+ "partita iva:\t\t"				+proprietarioPIVAestratto+				"\r\n\t|->"
+								+ "telefono 1:\t\t"					+proprietarioTelefonoEstratto+			"\r\n"		
+		);
+	}
+	
+	
+	public void ricercaNomeAziendaDaTesto(String query) {
+		
+        /*commandi sql per estrare le informazioni del proprietario*/
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                // Imposta il valore del parametro nella query
+                pstmt.setInt(1, 1);
+                
+                // Esegue la query e ottiene il risultato
+                try (ResultSet rs = pstmt.executeQuery(query)) {
+                    // Itera sui risultati e stampa le informazioni
+                	
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        proprietarioNomeEstratto = rs.getString("nome");
+                        proprietarioCodFiscEstratto = rs.getString("codice_fiscale");
+                        proprietarioPIVAestratto= rs.getString("partita_iva");
+                        proprietarioTelefonoEstratto=rs.getString("telefono");
+                    }
+                    
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }        
+        /*commandi sql per estrare le informazioni del proprietario*/
+		
+		finestraMain.infoTestoProprietario_testoimposta("Proprietario info:\r\n\t|->"
+								+ "Nome: \t\t\t"					+proprietarioNomeEstratto+				"\r\n\t|->"
+								+ "codice\r\n\t|\tfiscale:\t\t\t"	+proprietarioCodFiscEstratto+			"\r\n\t|->"
+								+ "partita iva:\t\t"				+proprietarioPIVAestratto+				"\r\n\t|->"
+								+ "telefono 1:\t\t"					+proprietarioTelefonoEstratto+			"\r\n"		
+		);
+	}
+	
+}
+
+
+class SOTTOPROCESSO_ricercaPulsante implements Runnable{
+	Finestra_MenuPrincipale f;
+	
+	boolean continua = true;
+	public SOTTOPROCESSO_ricercaPulsante(boolean continuaa) {
+		continua=continuaa;
+	}
+	
+	public void setContinua(boolean continuaa) {
+		continua=continuaa;
+	}
+	
+	public int contatore=0;
+	public int contatorePrecedente=0;
+	
+	
+	public void run() {
+		/*------------------------------------------------------------------*/
+		/*------------------------------------------------------------------*/
+	}
 }

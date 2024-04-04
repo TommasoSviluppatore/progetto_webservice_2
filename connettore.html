@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esegui Comando SQL</title>
+</head>
+<body>
+    <h2>Esegui Comando SQL</h2>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        Comando SQL: <input type="text" name="sql_command">
+        <input type="submit" value="Esegui">
+    </form>
+
+    <?php
+    // Connessione al database MySQL
+    $servername = "localhost";
+    $username = "username";
+    $password = "password";
+    $dbname = "websrvjavaxml";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Verifica connessione
+    if ($conn->connect_error) {
+        die("Connessione fallita: " . $conn->connect_error);
+    }
+
+    // Esegui il comando SQL se è stato inviato tramite il modulo HTML
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $sql_command = $_POST["sql_command"];
+        $result = $conn->query($sql_command);
+
+        if ($result === TRUE) {
+            echo "Comando eseguito con successo.";
+        } else {
+            echo "Errore nell'esecuzione del comando: " . $conn->error;
+        }
+    }
+
+    // Chiudi la connessione al database
+    $conn->close();
+    ?>
+</body>
+</html>
+

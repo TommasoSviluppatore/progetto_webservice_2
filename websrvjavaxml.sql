@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 03, 2024 alle 10:23
+-- Creato il: Apr 04, 2024 alle 12:17
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -32,7 +32,7 @@ CREATE TABLE `azienda_generica` (
   `nome` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
   `valore` float DEFAULT NULL,
   `proprietario` varchar(20) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
-  `settore` varchar(20) DEFAULT NULL,
+  `settore` enum('primario','secondario','terziario','altro') DEFAULT NULL,
   `tipo_azienda` varchar(20) DEFAULT NULL,
   `id_proprietario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -65,22 +65,6 @@ CREATE TABLE `persona_generica` (
 INSERT INTO `persona_generica` (`id`, `nome`, `codice_fiscale`, `partita_iva`, `telefono`) VALUES
 (1, 'tommaso', '1010101010101010', 9223372036854775807, 10395960);
 
--- --------------------------------------------------------
-
---
--- Struttura della tabella `stockdata`
---
-
-CREATE TABLE `stockdata` (
-  `id` int(11) NOT NULL,
-  `timestamp` datetime DEFAULT NULL,
-  `open` decimal(10,4) DEFAULT NULL,
-  `high` decimal(10,4) DEFAULT NULL,
-  `low` decimal(10,4) DEFAULT NULL,
-  `close` decimal(10,4) DEFAULT NULL,
-  `volume` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
 --
 -- Indici per le tabelle scaricate
 --
@@ -99,22 +83,6 @@ ALTER TABLE `persona_generica`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `limiteUnicoPIVA` (`codice_fiscale`),
   ADD UNIQUE KEY `limiteUnicoCD` (`partita_iva`);
-
---
--- Indici per le tabelle `stockdata`
---
-ALTER TABLE `stockdata`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT per le tabelle scaricate
---
-
---
--- AUTO_INCREMENT per la tabella `stockdata`
---
-ALTER TABLE `stockdata`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Limiti per le tabelle scaricate
