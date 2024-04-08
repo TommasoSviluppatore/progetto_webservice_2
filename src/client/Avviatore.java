@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.*;
 
 
 import view.Finestra_MenuPrincipale;
-import control.Controller_DatiApptxt;
 
 public class Avviatore {
 	/**

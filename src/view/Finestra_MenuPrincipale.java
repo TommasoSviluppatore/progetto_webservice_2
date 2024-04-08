@@ -20,9 +20,12 @@ import control.Controller_MenuPrincipale;
 
 public class Finestra_MenuPrincipale extends JFrame {
 	Controller_MenuPrincipale contrrrr = new Controller_MenuPrincipale();
+
+	private String nomeDatabaseFabbrica="azienda_generica";
+	private String nomeDatabaseOligarca="persona_generica";
 	
 	private JTextField campoRicerca;
-	private JPanel pannelloINFO, txtpnJPanel,txtPanel, pannelloLista, listaBottoniAziende;
+	private JPanel pannelloINFO, pannelloLista, listaBottoniAziende;
 	private JTextPane infoTestoAzienda, infoTestoProprietario;
 	private JButton BottoneRicerca;
 
@@ -51,14 +54,14 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        campoRicerca.setColumns(10);
 
 	        // Creazione del pannello scrollabile
-	        JScrollPane scrollPane = new JScrollPane();
-	        scrollPane.setBounds(0, 35, 275, 369);
-	        pannelloLista.add(scrollPane);
+	        JScrollPane parteAziendeDivisoria = new JScrollPane();
+	        parteAziendeDivisoria.setBounds(0, 35, 275, 369);
+	        pannelloLista.add(parteAziendeDivisoria);
 
 	        // Creazione del pannello contenente i bottoni
 	        listaBottoniAziende = new JPanel();
 	        listaBottoniAziende.setLayout(new BoxLayout(listaBottoniAziende, BoxLayout.Y_AXIS)); // Imposta il layout a BoxLayout verticale
-	        scrollPane.setViewportView(listaBottoniAziende);
+	        parteAziendeDivisoria.setViewportView(listaBottoniAziende);
 
 	        BottoneRicerca = new JButton("Ricerca");
 	        BottoneRicerca.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
@@ -76,9 +79,11 @@ public class Finestra_MenuPrincipale extends JFrame {
 	}
 
 	    
+		
+	public void resetPanelDopoRicerca(){
+		aggiungiAziendeBottoniInizio();
+	}
 	    
-	    
-	
 	public void aggiungiAziendeBottoniInizio() {
 		/**
 		 			query per nome azienda singola
@@ -88,6 +93,9 @@ public class Finestra_MenuPrincipale extends JFrame {
 					INNER JOIN persona_generica AS b 
 					ON a.id_proprietario = b.id; 
 		
+		*/
+		/* crea in modo dinamico i bottoni su java e metteili 
+		 * nella lista a scorrimeto
 		*/
 		String[] aziendaNomeEstratto = new String[80];
 		
@@ -99,7 +107,7 @@ public class Finestra_MenuPrincipale extends JFrame {
 		password = "password";
 		
 		try (Connection conn = DriverManager.getConnection(url, username, password)) {
-			String query = "SELECT nome FROM azienda_generica;";
+			String query = "SELECT nome FROM "+nomeDatabaseFabbrica+";";
 		
 			try (PreparedStatement pstmt = conn.prepareStatement(query)) {
 			    // Imposta il valore del parametro nella query
@@ -124,12 +132,23 @@ public class Finestra_MenuPrincipale extends JFrame {
 		for (int i = 0; i < 10 || aziendaNomeEstratto[i]!=""; i++) {
             JButton button = new JButton(aziendaNomeEstratto +" "+ i + ""); // Crea un nuovo JButton con il nome specificato
             listaBottoniAziende.add(button); // Aggiungi il pulsante al pannello
+            
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Azione da eseguire quando il pulsante viene premuto
+                	Button pulsantePremuto = (JButton) e.getSource();
+                    String nomePulsantePremuto = pulsantePremuto.getText();
+                    qualsiasiPulsantePremutoAzione(nomePulsantePremuto);
+                }
+            });
         }
 
         // Ridisegna il pannello
         listaBottoniAziende.revalidate();
         listaBottoniAziende.repaint();
 	}
+	
 	
 	
 	public void infoTestoAzienda_testoimposta(String Stringa) {
@@ -141,20 +160,49 @@ public class Finestra_MenuPrincipale extends JFrame {
 	}
 	
 	
-
+	
+	/**aggiungere i bottoni in automatico e fare un'ascoltatore automatico per i bottoni*/
+	/*public void registraEvento(Controller controller) {
+		// TODO Auto-generated method stub
+		this.btnStart.addActionListener(controller);
+		this.btnAddCar.addActionListener(controller);
+		this.btnRemoveCar.addActionListener(controller);
+		this.btnPause.addActionListener(controller);
+		this.btnResume.addActionListener(controller);
+		this.btnRestart.addActionListener(controller);
+		this.btnStop.addActionListener(controller);
+	}*/
+	
 	
 	/**alla pressione di questo pulsante fare partire questa funzione*/
-	public void ricercaPulsante() {
+	public void ricercaPulsantePremuto() {
 		listaBottoniAziende.removeAll();
 		listaBottoniAziende.revalidate();
 		listaBottoniAziende.repaint();
 		contrrrr.ricercaNomeAziendaDaTesto(
-				"SELECT * FROM azienda_generica"
+				"SELECT * FROM "+nomeDatabaseFabbrica+"
 				+ "where nome ="+campoRicerca.getText().toString()+";"
 		);
 	}
 	
-	public void resetPanelDopoRicerca(){
-		aggiungiAziendeBottoniInizio();
+	public void qualsiasiPulsantePremutoAzione() {
+		/* prendi il bottone premuto
+		 * e avvia il cambia info azienda e proprietario 
+		*/
+		contrrrr.CambiaInfoAzienda(
+				"select * from "+nomeDatabaseFabbrica+
+				"where "/*nome azienda indicata nel bottone*/);
+		
+		contrrrr.CambiaInfoProprietario(
+				
+				"SELECT a."+/*bottone[numero,nome].getText()*/null+
+				" FROM "+nomeDatabaseFabbrica +" AS a "+
+				"INNER JOIN persona_generica AS b "+
+				"ON a.id_proprietario = b.id;"
+				);
+		
+		
+				/*"select * from "+nomeDatabaseOligarca+
+				"where "/*nome propritario con collegamento indicata nel bottone);*/
 	}
 }

@@ -20,7 +20,7 @@ import view.Finestra_MenuPrincipale;
 
 
 public class Controller_MenuPrincipale {
-	Finestra_MenuPrincipale finestraMain = new Finestra_MenuPrincipale();
+	Finestra_MenuPrincipale finestraMain;
 
 	
 	String 		aziendaNomeEstratto; 		float aziendaValoreEstratto; 	String aziendaProprietarioEstratto,
@@ -32,16 +32,18 @@ public class Controller_MenuPrincipale {
 	String 		url, 	username, 	password;
 
 	
-	public void CambiaInfoAzienda(String query, String query2) {
+	
+	public void CambiaInfoAzienda(String query) {
 		
 		
 		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
 		
 		
 		/*commandi sql per estrare le informazioni dell'azienda*/
-		url = "jdbc:mysql://localhost:3306/websrvjavaxml";
+		url = "localhost:3306/websrvjavaxml";
         username = "username";
         password = "password";
+        ResultSet rs2 = null;
         
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
             
@@ -51,6 +53,7 @@ public class Controller_MenuPrincipale {
                 
                 // Esegue la query e ottiene il risultato
                 try (ResultSet rs = pstmt.executeQuery(query)) {
+                	rs2=rs;
                     // Itera sui risultati e stampa le informazioni
                 	
                     while (rs.next()) {
@@ -68,15 +71,38 @@ public class Controller_MenuPrincipale {
         }
         
 		/*----------------------------------------*/
-		finestraMain.infoTestoAzienda_testoimposta("Nome azienda: \t\t\t"	+aziendaNomeEstratto+			"\r\n\t|-> "
-        						+ "valore:\t\t\t"		+aziendaValoreEstratto+			"\r\n\t|-> "
-        						+ "proprietario:\t"		+aziendaProprietarioEstratto+	"\r\n\t|-> "
-        						+ "settore:\t\t\t"		+aziendaSettoreEstratto+		"\r\n\t|-> tipo "
-        						+ "azienda:\t$"			+aziendaTipoEstratto+			"");
+        String verifica1=rs2.toString();
+        if(verifica1!="Empty set (0.000 sec)") {
+        	finestraMain.infoTestoAzienda_testoimposta("Nome azienda: \t\t\t"	+aziendaNomeEstratto+			"\r\n\t|-> "
+					+ "valore:\t\t\t"		+aziendaValoreEstratto+			"\r\n\t|-> "
+					+ "proprietario:\t"		+aziendaProprietarioEstratto+	"\r\n\t|-> "
+					+ "settore:\t\t\t"		+aziendaSettoreEstratto+		"\r\n\t|-> tipo "
+					+ "azienda:\t$"			+aziendaTipoEstratto+			"");
+        	
+        }else 
+        	
+        	
+        if(verifica1=="Empty set (0.000 sec)"){
+        	finestraMain.infoTestoAzienda_testoimposta("azienda non esistente");
+        	
+        }else
+        	
+        	
+        	
+        {
+        	finestraMain.infoTestoAzienda_testoimposta("errore generico (0x00000000)");
+        	
+        }
+        
+       
+		
 		/*commandi sql per estrare le informazioni dell'azienda*/
 	}
 	
+	
+	
 	public void CambiaInfoProprietario(String query) {
+		ResultSet rs2=null;
 		
         /*commandi sql per estrare le informazioni del proprietario*/
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
@@ -87,6 +113,7 @@ public class Controller_MenuPrincipale {
                 
                 // Esegue la query e ottiene il risultato
                 try (ResultSet rs = pstmt.executeQuery(query)) {
+                	rs2=rs;
                     // Itera sui risultati e stampa le informazioni
                 	
                     while (rs.next()) {
@@ -103,14 +130,39 @@ public class Controller_MenuPrincipale {
             e.printStackTrace();
         }        
         /*commandi sql per estrare le informazioni del proprietario*/
+        
+        String verifica1=rs2.toString();
+        if(verifica1!="Empty set (0.000 sec)") {
+        	finestraMain.infoTestoProprietario_testoimposta("Proprietario info:\r\n\t|->"
+					+ "Nome: \t\t\t"					+proprietarioNomeEstratto+				"\r\n\t|->"
+					+ "codice\r\n\t|\tfiscale:\t\t\t"	+proprietarioCodFiscEstratto+			"\r\n\t|->"
+					+ "partita iva:\t\t"				+proprietarioPIVAestratto+				"\r\n\t|->"
+					+ "telefono 1:\t\t"					+proprietarioTelefonoEstratto+			"\r\n"		
+        			);
+        	
+        }else 
+        	
+        	
+        if(verifica1=="Empty set (0.000 sec)"){
+        	finestraMain.infoTestoProprietario_testoimposta("azienda non esistente");
+        	
+        }else
+        	
+        	
+        	
+        {
+        	finestraMain.infoTestoProprietario_testoimposta("errore generico (0x00000000)");
+        	
+        }
 		
-		finestraMain.infoTestoProprietario_testoimposta("Proprietario info:\r\n\t|->"
-								+ "Nome: \t\t\t"					+proprietarioNomeEstratto+				"\r\n\t|->"
-								+ "codice\r\n\t|\tfiscale:\t\t\t"	+proprietarioCodFiscEstratto+			"\r\n\t|->"
-								+ "partita iva:\t\t"				+proprietarioPIVAestratto+				"\r\n\t|->"
-								+ "telefono 1:\t\t"					+proprietarioTelefonoEstratto+			"\r\n"		
-		);
+		
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	public void ricercaNomeAziendaDaTesto(String query) {
@@ -149,27 +201,14 @@ public class Controller_MenuPrincipale {
 		);
 	}
 	
-}
-
-
-class SOTTOPROCESSO_ricercaPulsante implements Runnable{
-	Finestra_MenuPrincipale f;
 	
-	boolean continua = true;
-	public SOTTOPROCESSO_ricercaPulsante(boolean continuaa) {
-		continua=continuaa;
-	}
-	
-	public void setContinua(boolean continuaa) {
-		continua=continuaa;
-	}
-	
-	public int contatore=0;
-	public int contatorePrecedente=0;
-	
-	
-	public void run() {
-		/*------------------------------------------------------------------*/
-		/*------------------------------------------------------------------*/
+	public void RicercaPulsante() {
+		Thread mioThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+            	//finestraMain.???
+            }
+        });
+        mioThread.start();
 	}
 }
