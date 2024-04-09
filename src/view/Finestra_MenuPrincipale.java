@@ -205,4 +205,7 @@ public class Finestra_MenuPrincipale extends JFrame {
 				/*"select * from "+nomeDatabaseOligarca+
 				"where "/*nome propritario con collegamento indicata nel bottone);*/
 	}
+	
+	
+	
 }
