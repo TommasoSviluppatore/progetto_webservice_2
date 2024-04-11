@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+
+import javax.activation.CommandInfo;
 import javax.swing.*;
 import javax.xml.*;
 import javax.xml.bind.*;
@@ -205,7 +207,6 @@ public class Finestra_MenuPrincipale extends JFrame {
 				/*"select * from "+nomeDatabaseOligarca+
 				"where "/*nome propritario con collegamento indicata nel bottone);*/
 	}
-	
 	
 	
 }

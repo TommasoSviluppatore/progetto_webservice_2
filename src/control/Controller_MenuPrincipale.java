@@ -17,10 +17,12 @@ import javax.xml.bind.annotation.*;
 import java.sql.*;
 
 import view.Finestra_MenuPrincipale;
+import view.Finestra_GestioneDatabase;
 
 
 public class Controller_MenuPrincipale {
 	Finestra_MenuPrincipale finestraMain;
+	Finestra_GestioneDatabase finestraGest;
 
 	
 	String 		aziendaNomeEstratto; 		float aziendaValoreEstratto; 	String aziendaProprietarioEstratto,
@@ -34,7 +36,7 @@ public class Controller_MenuPrincipale {
 	
 	
 	public void CambiaInfoAzienda(String query) {
-		
+		finestraGest.setCommandi(finestraGest.getCommandi()+"\n"+query);
 		
 		/**cambiare contesto e scritte in base a quale azienda stai premendo,ottenendo in numero del bottone premuto*/
 		
@@ -71,6 +73,8 @@ public class Controller_MenuPrincipale {
         }
         
 		/*----------------------------------------*/
+
+		finestraGest.setCommandi(finestraGest.getCommandi()+"\n"+rs2);
         String verifica1=rs2.toString();
         if(verifica1!="Empty set (0.000 sec)") {
         	finestraMain.infoTestoAzienda_testoimposta("Nome azienda: \t\t\t"	+aziendaNomeEstratto+			"\r\n\t|-> "
@@ -102,6 +106,7 @@ public class Controller_MenuPrincipale {
 	
 	
 	public void CambiaInfoProprietario(String query) {
+		finestraGest.setCommandi(finestraGest.getCommandi()+"\n"+query);
 		ResultSet rs2=null;
 		
         /*commandi sql per estrare le informazioni del proprietario*/
@@ -132,6 +137,8 @@ public class Controller_MenuPrincipale {
         /*commandi sql per estrare le informazioni del proprietario*/
         
         String verifica1=rs2.toString();
+
+		finestraGest.setCommandi(finestraGest.getCommandi()+"\n"+rs2);
         if(verifica1!="Empty set (0.000 sec)") {
         	finestraMain.infoTestoProprietario_testoimposta("Proprietario info:\r\n\t|->"
 					+ "Nome: \t\t\t"					+proprietarioNomeEstratto+				"\r\n\t|->"
@@ -166,6 +173,7 @@ public class Controller_MenuPrincipale {
 	
 	
 	public void ricercaNomeAziendaDaTesto(String query) {
+		finestraGest.setCommandi(finestraGest.getCommandi()+"\n"+query);
 		
         /*commandi sql per estrare le informazioni del proprietario*/
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
@@ -192,6 +200,9 @@ public class Controller_MenuPrincipale {
             e.printStackTrace();
         }        
         /*commandi sql per estrare le informazioni del proprietario*/
+        
+
+		finestraGest.setCommandi(finestraGest.getCommandi()+"\n"+query);
 		
 		finestraMain.infoTestoProprietario_testoimposta("Proprietario info:\r\n\t|->"
 								+ "Nome: \t\t\t"					+proprietarioNomeEstratto+				"\r\n\t|->"

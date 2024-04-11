@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 04, 2024 alle 12:17
+-- Creato il: Apr 11, 2024 alle 15:56
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -65,6 +65,39 @@ CREATE TABLE `persona_generica` (
 INSERT INTO `persona_generica` (`id`, `nome`, `codice_fiscale`, `partita_iva`, `telefono`) VALUES
 (1, 'tommaso', '1010101010101010', 9223372036854775807, 10395960);
 
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `stockdata`
+--
+
+CREATE TABLE `stockdata` (
+  `id` int(11) NOT NULL,
+  `information` varchar(200) DEFAULT NULL,
+  `symbol` varchar(5) DEFAULT NULL,
+  `last_refreshed` datetime DEFAULT NULL,
+  `interval_value` int(11) DEFAULT NULL,
+  `output_size` varchar(8) DEFAULT NULL,
+  `time_zone` varchar(14) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `timeseries`
+--
+
+CREATE TABLE `timeseries` (
+  `id` int(11) NOT NULL,
+  `stock_data_id` int(11) DEFAULT NULL,
+  `time_stamp` datetime DEFAULT NULL,
+  `open_price` decimal(10,4) DEFAULT NULL,
+  `high_price` decimal(10,4) DEFAULT NULL,
+  `low_price` decimal(10,4) DEFAULT NULL,
+  `close_price` decimal(10,4) DEFAULT NULL,
+  `volume` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 --
 -- Indici per le tabelle scaricate
 --
@@ -85,6 +118,19 @@ ALTER TABLE `persona_generica`
   ADD UNIQUE KEY `limiteUnicoCD` (`partita_iva`);
 
 --
+-- Indici per le tabelle `stockdata`
+--
+ALTER TABLE `stockdata`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indici per le tabelle `timeseries`
+--
+ALTER TABLE `timeseries`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stock_data_id` (`stock_data_id`);
+
+--
 -- Limiti per le tabelle scaricate
 --
 
@@ -93,6 +139,12 @@ ALTER TABLE `persona_generica`
 --
 ALTER TABLE `azienda_generica`
   ADD CONSTRAINT `fk_id_persona` FOREIGN KEY (`id_proprietario`) REFERENCES `persona_generica` (`id`);
+
+--
+-- Limiti per la tabella `timeseries`
+--
+ALTER TABLE `timeseries`
+  ADD CONSTRAINT `timeseries_ibfk_1` FOREIGN KEY (`stock_data_id`) REFERENCES `stockdata` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

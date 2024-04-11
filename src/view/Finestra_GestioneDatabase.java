@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+
+import javax.activation.CommandInfo;
 import javax.swing.*;
 import javax.xml.*;
 import javax.xml.bind.*;
@@ -18,11 +20,12 @@ import java.sql.*;
 
 public class Finestra_GestioneDatabase extends JFrame{
 	
-	JPanel 			panelPrincipp, pannelloInfo,pannelloAzienda, panel;
-	
+	JPanel 			panelPrincipp, pannelloInfo,pannelloAzienda,pannelloProprietario,pannelloCommandiInPiccolo;
 	JButton 		aggiungiBottone,eliminaBottone, aggiungiBottone_2;
-	
-	JTabbedPane 	tabbedPane,pannelloProprietario;
+	JTabbedPane 	tabbedPane;
+	JRadioButton 	rdbtnNewRadioButton_4, rdbtnNewRadioButton_3,rdbtnNewRadioButton_2,rdbtnNewRadioButton_1;
+	JTextArea 		testoHH;
+	JLabel 			commandoFinestraTitolo;
 	
 	
 	JTextPane 		inserimentoAziendaID, inserimentoAziendaNome,
@@ -32,14 +35,11 @@ public class Finestra_GestioneDatabase extends JFrame{
 					scrittaAziendaSettore, scrittaAziendaTipo, scrittaAziendaIDProprietario;
 	
 	
+	JTextPane		inserimentoProprietarioID,inserimentoProprietarioNome,inserimentoProprietarioPartitaIva,
+					inserimentoProprietarioCodiceFiscale, inserimentoProprietarioTelefono;
 	
-	JTextPane 		inserimentoProprietarioID,inserimentoProprietarioNome,inserimentoProprietarioCodiceFiscale,
-					inserimentoProprietarioPartitaIva, inserimentoProprietarioTelefono;
-	
-	JLabel 			scrittaProprietarioID,scrittaProprietarioNome, scrittaProprietarioCodiceFiscale, scrittaProprietarioPartitaIva,
+	JLabel			scrittaProprietarioID,scrittaProprietarioNome,scrittaProprietarioPartitaIva, scrittaProprietarioCodiceFiscale,
 					scrittaProprietarioTelefono;
-	
-	JRadioButton rdbtnNewRadioButton_4, rdbtnNewRadioButton_3,rdbtnNewRadioButton_2,rdbtnNewRadioButton_1;
 	
 	
 	public Finestra_GestioneDatabase() {
@@ -120,7 +120,7 @@ public class Finestra_GestioneDatabase extends JFrame{
 		
 		scrittaAziendaProprietario = new JLabel("Proprietario azienda ");
 		scrittaAziendaProprietario.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
-		scrittaAziendaProprietario.setBounds(153, 129, 79, 27);
+		scrittaAziendaProprietario.setBounds(153, 129, 113, 27);
 		pannelloAzienda.add(scrittaAziendaProprietario);
 		
 		scrittaAziendaSettore = new JLabel("Settore azienda");
@@ -154,57 +154,69 @@ public class Finestra_GestioneDatabase extends JFrame{
 		rdbtnNewRadioButton_4.setBounds(208, 174, 58, 23);
 		pannelloAzienda.add(rdbtnNewRadioButton_4);
 		
-		pannelloProprietario = new JTabbedPane(JTabbedPane.TOP);
+		pannelloProprietario = new JPanel();
 		tabbedPane.addTab("New tab", null, pannelloProprietario, null);
-		
-		panel = new JPanel();
-		pannelloProprietario.addTab("New tab", null, panel, null);
-		panel.setLayout(null);
+		pannelloProprietario.setLayout(null);
 		
 		inserimentoProprietarioID = new JTextPane();
 		inserimentoProprietarioID.setBounds(10, 11, 133, 27);
-		panel.add(inserimentoProprietarioID);
+		pannelloProprietario.add(inserimentoProprietarioID);
 		
 		scrittaProprietarioID = new JLabel("ID azienda");
 		scrittaProprietarioID.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		scrittaProprietarioID.setBounds(153, 11, 79, 27);
-		panel.add(scrittaProprietarioID);
+		pannelloProprietario.add(scrittaProprietarioID);
 		
 		inserimentoProprietarioNome = new JTextPane();
 		inserimentoProprietarioNome.setBounds(10, 52, 133, 27);
-		panel.add(inserimentoProprietarioNome);
+		pannelloProprietario.add(inserimentoProprietarioNome);
 		
 		inserimentoProprietarioCodiceFiscale = new JTextPane();
 		inserimentoProprietarioCodiceFiscale.setBounds(10, 94, 133, 27);
-		panel.add(inserimentoProprietarioCodiceFiscale);
+		pannelloProprietario.add(inserimentoProprietarioCodiceFiscale);
 		
 		inserimentoProprietarioPartitaIva = new JTextPane();
-		inserimentoProprietarioPartitaIva.setBounds(10, 136, 133, 27);
-		panel.add(inserimentoProprietarioPartitaIva);
+		inserimentoProprietarioPartitaIva.setBounds(10, 141, 133, 27);
+		pannelloProprietario.add(inserimentoProprietarioPartitaIva);
 		
 		inserimentoProprietarioTelefono = new JTextPane();
-		inserimentoProprietarioTelefono.setBounds(10, 174, 133, 27);
-		panel.add(inserimentoProprietarioTelefono);
+		inserimentoProprietarioTelefono.setBounds(10, 185, 133, 27);
+		pannelloProprietario.add(inserimentoProprietarioTelefono);
 		
 		scrittaProprietarioNome = new JLabel("Nome proprietario");
 		scrittaProprietarioNome.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
 		scrittaProprietarioNome.setBounds(153, 52, 118, 27);
-		panel.add(scrittaProprietarioNome);
+		pannelloProprietario.add(scrittaProprietarioNome);
 		
 		scrittaProprietarioCodiceFiscale = new JLabel("codice fiscale proprietario");
 		scrittaProprietarioCodiceFiscale.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
-		scrittaProprietarioCodiceFiscale.setBounds(153, 94, 118, 27);
-		panel.add(scrittaProprietarioCodiceFiscale);
+		scrittaProprietarioCodiceFiscale.setBounds(153, 94, 142, 27);
+		pannelloProprietario.add(scrittaProprietarioCodiceFiscale);
 		
 		scrittaProprietarioPartitaIva = new JLabel("partita iva proprietario");
 		scrittaProprietarioPartitaIva.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
-		scrittaProprietarioPartitaIva.setBounds(153, 136, 118, 27);
-		panel.add(scrittaProprietarioPartitaIva);
+		scrittaProprietarioPartitaIva.setBounds(153, 141, 118, 27);
+		pannelloProprietario.add(scrittaProprietarioPartitaIva);
 		
 		scrittaProprietarioTelefono = new JLabel("telefono proprietario");
 		scrittaProprietarioTelefono.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 12));
-		scrittaProprietarioTelefono.setBounds(153, 174, 118, 27);
-		panel.add(scrittaProprietarioTelefono);
+		scrittaProprietarioTelefono.setBounds(153, 185, 118, 27);
+		pannelloProprietario.add(scrittaProprietarioTelefono);
+		
+		pannelloCommandiInPiccolo = new JPanel();
+		pannelloCommandiInPiccolo.setBounds(447, 213, 144, 210);
+		panelPrincipp.add(pannelloCommandiInPiccolo);
+		pannelloCommandiInPiccolo.setLayout(null);
+		
+		testoHH = new JTextArea();
+		testoHH.setEditable(false);
+		testoHH.setBounds(0, 11, 144, 199);
+		pannelloCommandiInPiccolo.add(testoHH);
+		
+		commandoFinestraTitolo = new JLabel("Commandi");
+		commandoFinestraTitolo.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		commandoFinestraTitolo.setBounds(0, 0, 144, 14);
+		pannelloCommandiInPiccolo.add(commandoFinestraTitolo);
 	}
 	
 
@@ -235,4 +247,8 @@ public class Finestra_GestioneDatabase extends JFrame{
 			return "errore";
 		}
 	}
+	
+	
+	public String getCommandi() {return testoHH.getText();}
+	public void setCommandi(String a) {testoHH.setText(a);}
 }
