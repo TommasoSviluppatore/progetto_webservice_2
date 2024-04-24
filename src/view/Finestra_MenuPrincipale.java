@@ -39,12 +39,6 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        getContentPane().add(pannelloINFO);
 	        pannelloINFO.setLayout(null);
 
-	        infoTestoProprietario = new JTextPane();
-	        infoTestoProprietario.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-	        infoTestoProprietario.setText("Proprietario info:\r\n\t|->Nome: \t\t\t\tvignola matteo\t\t\t\t,\r\n\t|->codice\r\n\t\tfiscale:\t\t\t\t458538iojodijf90509\t\t\t\r\n\t|->partita iva:\t\t\tjgdroji50985409dgkjl\t\t\r\n\t|->telefono 1:\t\t\t+39 758 383 5858\t\t\t\r\n");
-	        infoTestoProprietario.setBounds(0, 0, 792, 170);
-	        pannelloINFO.add(infoTestoProprietario);
-
 	        pannelloLista = new JPanel();
 	        pannelloLista.setBounds(0, 0, 275, 404);
 	        getContentPane().add(pannelloLista);
@@ -75,6 +69,12 @@ public class Finestra_MenuPrincipale extends JFrame {
 	        infoTestoAzienda.setBounds(274, 0, 518, 404);
 	        getContentPane().add(infoTestoAzienda);
 	        infoTestoAzienda.setText("Nome azienda: \t\t\t\t\t\t$azienda_per_soldi\t\t\t\t\r\n\t|-> valore:\t\t\t\t\t\t$100€\t\t\t\t\t\t\t\r\n\t|-> proprietario:\t\t\t\t$vignola_matteo \t\t\t\t\r\n\t|-> settore:\t\t\t\t\t\t$agricoltura\t\t\t\t\t\r\n\t|-> tipo azienda:\t\t\t\t$pubblica_privata_statale");
+	        
+	        	        infoTestoProprietario = new JTextPane();
+	        	        infoTestoProprietario.setBounds(0, 404, 792, 170);
+	        	        getContentPane().add(infoTestoProprietario);
+	        	        infoTestoProprietario.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+	        	        infoTestoProprietario.setText("Proprietario info:\r\n\t|->Nome: \t\t\t\tvignola matteo\t\t\t\t,\r\n\t|->codice\r\n\t\tfiscale:\t\t\t\t458538iojodijf90509\t\t\t\r\n\t|->partita iva:\t\t\tjgdroji50985409dgkjl\t\t\r\n\t|->telefono 1:\t\t\t+39 758 383 5858\t\t\t\r\n");
 	        
 	        aggiungiAziendeBottoniInizio();
 		
@@ -182,7 +182,7 @@ public class Finestra_MenuPrincipale extends JFrame {
 		listaBottoniAziende.revalidate();
 		listaBottoniAziende.repaint();
 		contrrrr.ricercaNomeAziendaDaTesto(
-				"SELECT * FROM "+nomeDatabaseFabbrica+"
+				"SELECT * FROM "+nomeDatabaseFabbrica
 				+ "where nome ="+campoRicerca.getText().toString()+";"
 		);
 	}

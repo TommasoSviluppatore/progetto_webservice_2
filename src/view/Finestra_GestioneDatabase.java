@@ -20,9 +20,9 @@ import java.sql.*;
 
 public class Finestra_GestioneDatabase extends JFrame{
 	
-	JPanel 			panelPrincipp, pannelloInfo,pannelloAzienda,pannelloProprietario,pannelloCommandiInPiccolo;
+	JPanel 			panelPrincipp, pannelloFunzioni,pannelloAzienda,pannelloProprietario,pannelloCommandiInPiccolo;
 	JButton 		aggiungiBottone,eliminaBottone, aggiungiBottone_2;
-	JTabbedPane 	tabbedPane;
+	JTabbedPane 	pannelloMultipla;
 	JRadioButton 	rdbtnNewRadioButton_4, rdbtnNewRadioButton_3,rdbtnNewRadioButton_2,rdbtnNewRadioButton_1;
 	JTextArea 		testoHH;
 	JLabel 			commandoFinestraTitolo;
@@ -65,18 +65,18 @@ public class Finestra_GestioneDatabase extends JFrame{
 		aggiungiBottone_2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 13));
 		panelPrincipp.add(aggiungiBottone_2);
 		
-		pannelloInfo = new JPanel();
-		pannelloInfo.setBounds(0, 0, 449, 423);
-		panelPrincipp.add(pannelloInfo);
-		pannelloInfo.setLayout(null);
+		pannelloFunzioni = new JPanel();
+		pannelloFunzioni.setBounds(0, 0, 449, 423);
+		panelPrincipp.add(pannelloFunzioni);
+		pannelloFunzioni.setLayout(null);
 		
-		tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		tabbedPane.setBounds(0, 0, 449, 423);
-		pannelloInfo.add(tabbedPane);
+		pannelloMultipla = new JTabbedPane(JTabbedPane.BOTTOM);
+		pannelloMultipla.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		pannelloMultipla.setBounds(0, 0, 449, 423);
+		pannelloFunzioni.add(pannelloMultipla);
 		
 		pannelloAzienda = new JPanel();
-		tabbedPane.addTab("New tab", null, pannelloAzienda, null);
+		pannelloMultipla.addTab("New tab", null, pannelloAzienda, null);
 		pannelloAzienda.setLayout(null);
 		
 		inserimentoAziendaID = new JTextPane();
@@ -155,7 +155,7 @@ public class Finestra_GestioneDatabase extends JFrame{
 		pannelloAzienda.add(rdbtnNewRadioButton_4);
 		
 		pannelloProprietario = new JPanel();
-		tabbedPane.addTab("New tab", null, pannelloProprietario, null);
+		pannelloMultipla.addTab("New tab", null, pannelloProprietario, null);
 		pannelloProprietario.setLayout(null);
 		
 		inserimentoProprietarioID = new JTextPane();
